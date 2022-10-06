@@ -7,3 +7,10 @@
 /NZWalks/.vs/NZWalks/FileContentIndex
 /NZWalks/NZWalksAPI/bin/Debug/net6.0
 /NZWalks/NZWalksAPI/obj
+NZWalks/.vs/NZWalks/v17/.suo
+/NZWalks/.vs/NZWalks/v17/TestStore/0
+NZWalks/.vs/NZWalks/v17/.suo
+*.cache
+*.cache
+NZWalks/NZWalksAPI/obj/NZWalksAPI.csproj.nuget.dgspec.json
+NZWalks/NZWalksAPI/obj/Debug/net6.0/NZWalksAPI.csproj.AssemblyReference.cache
