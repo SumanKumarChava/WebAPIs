@@ -14,3 +14,5 @@ NZWalks/.vs/NZWalks/v17/.suo
 *.cache
 NZWalks/NZWalksAPI/obj/NZWalksAPI.csproj.nuget.dgspec.json
 NZWalks/NZWalksAPI/obj/Debug/net6.0/NZWalksAPI.csproj.AssemblyReference.cache
+*.suo
+/NZWalks/NZWalksAPI/bin
