@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/NZWalks/.vs/NZWalks/config/applicationhost.config
+/NZWalks/.vs/NZWalks/DesignTimeBuild/.dtbcache.v2
+/NZWalks/.vs/NZWalks/FileContentIndex
+/NZWalks/NZWalksAPI/bin/Debug/net6.0
+/NZWalks/NZWalksAPI/obj
