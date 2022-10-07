@@ -24,3 +24,5 @@ NZWalks/.vs/NZWalks/v17/.suo
 *.cache
 *.json
 NZWalks/NZWalksAPI/obj/project.nuget.cache
+*.cache
+NZWalks/.vs/NZWalks/v17/.suo
