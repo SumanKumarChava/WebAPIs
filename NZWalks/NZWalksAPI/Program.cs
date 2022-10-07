@@ -23,6 +23,7 @@ namespace NZWalksAPI
             });
 
             builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+            builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
             var app = builder.Build();
 

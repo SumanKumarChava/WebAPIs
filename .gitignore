@@ -20,3 +20,7 @@ NZWalks/NZWalksAPI/obj/Debug/net6.0/NZWalksAPI.csproj.AssemblyReference.cache
 NZWalks/.vs/NZWalks/v17/.suo
 *.1
 *.user
+*.cache
+*.cache
+*.json
+NZWalks/NZWalksAPI/obj/project.nuget.cache
