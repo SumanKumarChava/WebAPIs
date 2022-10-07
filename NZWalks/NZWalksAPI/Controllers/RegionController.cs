@@ -26,5 +26,21 @@ namespace NZWalksAPI.Controllers
             var regionDTOs = _mapper.Map<List<RegionDTO>>(regions);
             return Ok(regionDTOs);
         }
+
+        [HttpGet]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> GetRegionById(Guid id)
+        {
+            var region = await _regionRepository.GetRegionAsync(id);
+
+            if(region == null)
+            {
+                return NotFound();
+            }
+
+            var regionDTO = _mapper.Map<RegionDTO>(region);
+            return Ok(regionDTO);
+
+        }
     }
 }
