@@ -9,10 +9,7 @@ namespace NZWalksAPI.Profiles
         public RegionProfile()
         {
             CreateMap<Region, RegionDTO>()
-                .ForMember(t => t.RegionId, options => options.MapFrom(src => src.Id))
-                .ForMember(t => t.RegionName, options => options.MapFrom(src => src.Name))
-                .ForMember(t => t.TotalPopulation, options => options.MapFrom(src => src.Population))
-                .ForMember(t => t.RegionCode, options => options.MapFrom(src => src.Code));
+                .ForMember(t => t.TotalPopulation, options => options.MapFrom(src => src.Population));
 
         }
     }

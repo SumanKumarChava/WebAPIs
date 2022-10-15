@@ -64,7 +64,7 @@ namespace NZWalksAPI.Controllers
 
             // Convert the resulting Domain object to DTO and send to client
             var finalResponse = _mapper.Map<RegionDTO>(result);
-            return CreatedAtAction(nameof(GetRegionById), new { id = finalResponse.RegionId}, finalResponse);
+            return CreatedAtAction(nameof(GetRegionById), new { id = finalResponse.Id}, finalResponse);
         }
 
         [HttpDelete]

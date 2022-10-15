@@ -4,9 +4,9 @@ namespace NZWalksAPI.Models.DTO
 {
     public class RegionDTO
     {
-        public Guid RegionId { get; set; }
-        public string RegionCode { get; set; } = string.Empty;
-        public string RegionName { get; set; } = String.Empty;
+        public Guid Id { get; set; }
+        public string Code { get; set; } = string.Empty;
+        public string Name { get; set; } = String.Empty;
         public double Area { get; set; }
         public double Lat { get; set; }
         public double Long { get; set; }

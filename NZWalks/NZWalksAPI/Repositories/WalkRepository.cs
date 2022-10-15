@@ -36,7 +36,10 @@ namespace NZWalksAPI.Repositories
 
         public async Task<Walk?> GetWalkById(Guid id)
         {
-           return await _NZWalksDBContext.Walks.FirstOrDefaultAsync(w => w.Id == id);
+           return await _NZWalksDBContext.Walks
+                .Include(t => t.WalkDifficulty)
+                .Include(t => t.Region)
+                .FirstOrDefaultAsync(w => w.Id == id);
         }
 
         public async Task<Walk> InsertWalk(Walk walk)
