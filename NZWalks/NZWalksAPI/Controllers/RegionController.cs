@@ -48,6 +48,12 @@ namespace NZWalksAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRegionAsync(AddRegionRequest region)
         {
+            if (!IsValidRegionRequestObject(region))
+            {
+                return BadRequest(ModelState);
+            }
+
+
             // Convert DTO to Domain object
             var dbRegion = new Region()
             {
@@ -84,6 +90,11 @@ namespace NZWalksAPI.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> UpdateRegionAsync([FromRoute]Guid id, [FromBody]AddRegionRequest region)
         {
+            if (!IsValidRegionRequestObject(region))
+            {
+                return BadRequest(ModelState);
+            }
+
             // convert dto to domain object
             var dbRegion = new Region()
             {
@@ -107,6 +118,41 @@ namespace NZWalksAPI.Controllers
             // else, convert domain object to dto and send to client
             var regionDTO = _mapper.Map<RegionDTO>(updatedRegion);
             return Ok(regionDTO);
+        }
+
+        private bool IsValidRegionRequestObject(AddRegionRequest region)
+        {
+            if(region == null)
+            {
+                ModelState.AddModelError(nameof(region),$"{nameof(region)} cannot be empty");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(region.RegionCode))
+            {
+                ModelState.AddModelError(nameof(region.RegionCode), $"{nameof(region.RegionCode)} cannot be empty");
+            }
+
+            if (string.IsNullOrWhiteSpace(region.RegionName))
+            {
+                ModelState.AddModelError(nameof(region.RegionName), $"{nameof(region.RegionName)} cannot be empty");
+            }
+
+            if (region.Area <= 0)
+            {
+                ModelState.AddModelError(nameof(region.Area), $"{nameof(region.Area)} must be greater than zero");
+            }
+
+            if (region.TotalPopulation < 0)
+            {
+                ModelState.AddModelError(nameof(region.TotalPopulation), $"{nameof(region.TotalPopulation)} must be greater than or equals to zero");
+            }
+
+            if(ModelState.ErrorCount > 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
