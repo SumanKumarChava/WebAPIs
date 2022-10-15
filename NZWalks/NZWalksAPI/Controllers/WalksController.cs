@@ -12,12 +12,16 @@ namespace NZWalksAPI.Controllers
     public class WalksController : Controller
     {
         private readonly IWalkRepository _walkRepository;
+        private readonly IRegionRepository regionRepository;
+        private readonly IWalkDifficultyRepository walkDifficultyRepository;
         private readonly IMapper _mapper;
 
-        public WalksController(IWalkRepository walkRepository, IMapper mapper)
+        public WalksController(IWalkRepository walkRepository, IRegionRepository regionRepository, IWalkDifficultyRepository walkDifficultyRepository, IMapper mapper)
         {
            _walkRepository = walkRepository;
-           _mapper = mapper;
+            this.regionRepository = regionRepository;
+            this.walkDifficultyRepository = walkDifficultyRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -46,6 +50,11 @@ namespace NZWalksAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> InsertWalk([FromBody]AddWalkRequest addWalkRequest)
         {
+            if (!await IsValidWalkRequest(addWalkRequest))
+            {
+                return BadRequest(ModelState);
+            }
+
             // 1) Convert DTO to domain object
             var walkDomain = new Walk
             {
@@ -105,5 +114,32 @@ namespace NZWalksAPI.Controllers
             return Ok(walkDTO);
         }
 
+        private async Task<bool> IsValidWalkRequest(AddWalkRequest addWalkRequest)
+        {
+            if(addWalkRequest == null)
+            {
+                ModelState.AddModelError(nameof(addWalkRequest), $"{nameof(addWalkRequest)} object should not be null");
+                return false;
+            }
+
+            var region = await this.regionRepository.GetRegionAsync(addWalkRequest.RegionId);
+            if(region == null)
+            {
+                ModelState.AddModelError(nameof(addWalkRequest.RegionId), $"{nameof(addWalkRequest.RegionId)} is not existing in DB");
+            }
+
+            var walkDifficulty = await this.walkDifficultyRepository.GetWalkDifficultyById(addWalkRequest.WalkDifficultyId);
+            if (walkDifficulty == null)
+            {
+                ModelState.AddModelError(nameof(addWalkRequest.WalkDifficultyId), $"{nameof(addWalkRequest.WalkDifficultyId)} is not existing in DB");
+            }
+
+            if(ModelState.ErrorCount > 0)
+            {
+                return false;
+            }
+            return true;
+
+        }
     }
 }
