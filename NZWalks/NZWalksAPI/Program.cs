@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NZWalksAPI.Data;
 using NZWalksAPI.Repositories;
+using NZWalksAPI.Repositories.Interfaces;
 
 namespace NZWalksAPI
 {
