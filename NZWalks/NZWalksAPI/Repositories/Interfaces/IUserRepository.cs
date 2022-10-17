@@ -4,6 +4,6 @@ namespace NZWalksAPI.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        User? AuthenticateUser(string username, string password);
+        Task<User?> AuthenticateUser(string username, string password);
     }
 }

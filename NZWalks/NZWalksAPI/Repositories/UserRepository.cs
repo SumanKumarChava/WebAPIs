@@ -1,42 +1,37 @@
-﻿using NZWalksAPI.Models.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using NZWalksAPI.Data;
+using NZWalksAPI.Models.Domain;
 using NZWalksAPI.Repositories.Interfaces;
 
 namespace NZWalksAPI.Repositories
 {
     public class UserRepository : IUserRepository
     {
-
-        private List<User> Users = new List<User>()
+        private readonly NZWalksDBContext nZWalksDBContext;
+        public UserRepository(NZWalksDBContext nZWalksDBContext)
         {
-            new User()
-            {
-                UserName = "Reader",
-                Password = "123456",
-                Roles = new List<string>(){"reader"},
-                EmailAddress = "reader@NZWalks.com",
-                FirstName = "Reader",
-                LastName = "Only",
-                Id = Guid.NewGuid()
-            },
-            new User()
-            {
-                UserName = "ReaderWriter",
-                Password = "123456",
-                Roles = new List<string>(){"reader", "writer"},
-                EmailAddress = "readerwriter@NZWalks.com",
-                FirstName = "Reader",
-                LastName = "Writer",
-                Id = Guid.NewGuid()
-            }
-        };
+            this.nZWalksDBContext = nZWalksDBContext;
+        }
 
-        public User? AuthenticateUser(string username, string password)
+        public async Task<User?> AuthenticateUser(string username, string password)
         {
-            var dbUser = Users.FirstOrDefault(x => x.UserName.Equals(username, StringComparison.InvariantCultureIgnoreCase) && password.Equals(password));
+            var dbUser = this.nZWalksDBContext.Users.FirstOrDefault(x => x.UserName.ToLower() == username.ToLower() && password.Equals(password));
             if(dbUser == null)
             {
                 return null;
             }
+
+            var roles = new List<string>();
+            var userRoles = await this.nZWalksDBContext.UserRoles.Where(t => t.UserId == dbUser.Id).ToListAsync();
+            if(userRoles != null && userRoles.Count > 0)
+            {
+                userRoles.ForEach(u =>
+                {
+                    var roleName = nZWalksDBContext.Roles.FirstOrDefault(t => t.Id == u.RoleId)?.Name;
+                    roles.Add(roleName);
+                });
+            }
+            dbUser.Roles = roles;
             return dbUser;
         }
     }

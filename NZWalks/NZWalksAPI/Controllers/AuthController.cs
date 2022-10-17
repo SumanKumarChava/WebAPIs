@@ -29,7 +29,7 @@ namespace NZWalksAPI.Controllers
             }
 
             // Check if user is authenticated
-            var user = _userRepository.AuthenticateUser(loginRequest.UserName, loginRequest.Password);
+            var user = await _userRepository.AuthenticateUser(loginRequest.UserName, loginRequest.Password);
             if(user == null)
             {
                 return BadRequest("Username or Password is incorrect");
