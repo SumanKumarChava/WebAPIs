@@ -31,3 +31,6 @@ NZWalks/.vs/NZWalks/v17/.suo
 *.json
 *.json
 *.cache
+/MyBooks/.vs/MyBooks/config/applicationhost.config
+/MyBooks/MyBooks/bin/Debug/net6.0
+/MyBooks/MyBooks/obj
